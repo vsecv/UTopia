@@ -705,3 +705,35 @@ wabt:
       libalias: libwabt.a
       srcpath: src
       buildkey: wabt-unittests
+
+dlt-daemon:
+  name: dlt-daemon
+  prjdir: dlt-daemon
+  builddir: build
+  libs:
+    libdlt.a:
+  uts:
+    gtest_dlt_common:
+      libalias: libdlt.a
+      srcpath: tests
+      buildkey: gtest_dlt_common
+    dlt_env_ll_unit_test:
+      libalias: libdlt.a
+      srcpath: tests
+      buildkey: dlt_env_ll_unit_test
+    dlt_test_receiver:
+      libalias: libdlt.a
+      srcpath: tests
+      buildkey: dlt_test_receiver
+    gtest_dlt_daemon_common:
+      libalias: libdlt.a
+      srcpath: tests
+      buildkey: gtest_dlt_daemon_common
+    gtest_dlt_daemon_multiple_files_logging:
+      libalias: libdlt.a
+      srcpath: tests
+      buildkey: gtest_dlt_daemon_multiple_files_logging
+    gtest_dlt_user:
+      libalias: libdlt.a
+      srcpath: tests
+      buildkey: gtest_dlt_user
