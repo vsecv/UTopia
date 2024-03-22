@@ -807,3 +807,27 @@ targets:
         - cd build && cmake k#:cmake_profile_flags:# ..
         - cd build && make -j8 > /dev/null 2>&1
         - cp build/libwabt.a output/libwabt_profile.a
+        
+  dlt-daemon:
+    repo:
+      dir: dlt-daemon
+      cmd:
+        - git clone https://github.com/vsecv/dlt-daemon.git --config user.name=autofuzz --config user.email=autofuzz@autofuzz.com
+        - cd dlt-daemon &&  git checkout master -b autofuzz_base
+    compile:
+      org:
+        - rm -rf build && mkdir -p build
+        - cd build && cmake -DWITH_DLT_UNIT_TESTS=ON -DBUILD_SHARED_LIBS=OFF k#:cmake_org_flags:# ..
+        - rm -f output/build.log
+        - cd build && export COMPILE_LOG="$(realpath ../output/build.log)" && make -j40 V=1
+        - cp build/src/lib/libdlt.a output/
+      fuzzer:
+        - rm -rf build && mkdir -p build
+        - cd build && cmake -DWITH_DLT_UNIT_TESTS=ON -DBUILD_SHARED_LIBS=OFF k#:cmake_fuzzer_flags:# ..
+        - cd build && make -j40 > /dev/null 2>&1
+        - cp build/src/lib/libdlt.a output/libdlt_fuzzer.a
+      profile:
+        - rm -rf build && mkdir -p build
+        - cd build && cmake -DWITH_DLT_UNIT_TESTS=ON -DBUILD_SHARED_LIBS=OFF k#:cmake_profile_flags:# ..
+        - cd build && make -j40 > /dev/null 2>&1
+        - cp build/src/lib/libdlt.a output/libdlt_profile.a
